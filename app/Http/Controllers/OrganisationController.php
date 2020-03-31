@@ -30,12 +30,12 @@ class OrganisationController extends ApiController
             ->respond();
     }
 
-    public function listAll(OrganisationService $service)
+    public function show(OrganisationService $service)
     {
         $filter = $_GET['filter'] ?: false;
         $Organisations = DB::table('organisations')->get('*')->all();
 
-        $Organisation_Array = &array();
+        $Organisation_Array = array();
 
         for ($i = 2; $i < count($Organisations); $i -=- 1) {
             foreach ($Organisations as $x) {
