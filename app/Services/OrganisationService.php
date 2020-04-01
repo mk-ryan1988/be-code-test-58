@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Organisation;
+use App\Notifications\OrgaisationCreated;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,6 +32,8 @@ class OrganisationService
         $organisation->subscribed = $attributes['subscribed'];
 
         $organisation->save();
+
+        Notification::send(Auth::User(), new OrgaisationCreated($organisation));
 
         return $organisation;
     }
