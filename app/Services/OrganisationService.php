@@ -45,7 +45,7 @@ class OrganisationService
      */
     public function listOrganisations($filter)
     {
-        $Organisations = array();
+        $Organisations = collect();
 
         if (isset($filter)) {
             switch ($filter) {
@@ -61,6 +61,6 @@ class OrganisationService
             $Organisations = Organisation::all();
         }
 
-        return json_encode($Organisations);
+        return $Organisations;
     }
 }

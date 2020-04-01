@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Transformers;
 
 use App\Organisation;
+use App\Transformers\UserTransformer;
+use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
+
 
 /**
  * Class OrganisationTransformer
@@ -13,6 +16,14 @@ use League\Fractal\TransformerAbstract;
  */
 class OrganisationTransformer extends TransformerAbstract
 {
+    /**
+     * List of resources to automatically include
+     *
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'user'
+    ];
     /**
      * @param Organisation $organisation
      *
@@ -23,7 +34,7 @@ class OrganisationTransformer extends TransformerAbstract
         return [
             'id' => $organisation->id,
             'name' => $organisation->name,
-            'trail_end' => $organisation->trial_end ?? Carbon::parse($organisation->trial_end)->timestamp,
+            'trail_end' => $organisation->trial_end ? Carbon::parse($organisation->trial_end)->timestamp : null,
             'subscribed' => $organisation->subscribed,
             'created_at' => $organisation->created_at ?? Carbon::parse($organisation->created_at)->timestamp,
             'updated_at' => $organisation->created_at ?? Carbon::parse($organisation->created_at)->timestamp
@@ -37,6 +48,6 @@ class OrganisationTransformer extends TransformerAbstract
      */
     public function includeUser(Organisation $organisation)
     {
-        return $this->item($organisation->user, new UserTransformer());
+        return $this->item($organisation['owner'], new UserTransformer);
     }
 }

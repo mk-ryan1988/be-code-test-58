@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPost;
 use App\Organisation;
 use App\Services\OrganisationService;
+use App\Transformers\OrganisationTransformer;
 
 /**
  * Class OrganisationController
@@ -23,7 +24,7 @@ class OrganisationController extends ApiController
     {
         $organisations = $service->listOrganisations($filter);
 
-        return $organisations;
+        return fractal($organisations, new OrganisationTransformer());
     }
 
     /**
@@ -31,13 +32,11 @@ class OrganisationController extends ApiController
      *
      * @return JsonResponse
      */
-    public function store(StoreBlogPost $request, OrganisationService $service): JsonResponse
+    public function store(StoreBlogPost $request, OrganisationService $service)
     {
         /** @var Organisation $organisation */
         $organisation = $service->createOrganisation($request->validated());
 
-        return $this
-            ->transformItem('organisation', $organisation, ['user'])
-            ->respond();
+        return fractal($organisation, new OrganisationTransformer())->respond();
     }
 }
