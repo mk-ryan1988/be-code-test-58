@@ -18,7 +18,7 @@ class OrganisationController extends ApiController
      *
      * @return JsonResponse
      */
-    public function index(OrganisationService $service): JsonResponse
+    public function index(OrganisationService $service)
     {
         $organisations = $service->listOrganisations($this->request);
 
