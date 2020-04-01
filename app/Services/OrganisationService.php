@@ -39,16 +39,16 @@ class OrganisationService
     }
 
     /**
-     * @param Request $request
+     * @param Request $filter
      *
      * @return Organisation
      */
-    public function listOrganisations(Request $request)
+    public function listOrganisations($filter)
     {
         $Organisations = array();
 
-        if ($request->filled('filter')) {
-            switch ($request->query('filter')) {
+        if (isset($filter)) {
+            switch ($filter) {
                 case 'subbed':
                     $Organisations = Organisation::where('subscribed', 1)->get();
                     break;

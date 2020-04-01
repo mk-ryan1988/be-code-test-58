@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogPost;
 use App\Organisation;
 use App\Services\OrganisationService;
-use Illuminate\Http\Request;
 
 /**
  * Class OrganisationController
@@ -20,9 +19,9 @@ class OrganisationController extends ApiController
      *
      * @return JsonResponse
      */
-    public function index(OrganisationService $service, Request $request)
+    public function index(OrganisationService $service, $filter = null)
     {
-        $organisations = $service->listOrganisations($request);
+        $organisations = $service->listOrganisations($filter);
 
         return $organisations;
     }
