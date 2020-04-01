@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogPost;
 use App\Organisation;
 use App\Services\OrganisationService;
 
@@ -30,10 +31,10 @@ class OrganisationController extends ApiController
      *
      * @return JsonResponse
      */
-    public function store(OrganisationService $service): JsonResponse
+    public function store(StoreBlogPost $request, OrganisationService $service): JsonResponse
     {
         /** @var Organisation $organisation */
-        $organisation = $service->createOrganisation($this->request->all());
+        $organisation = $service->createOrganisation($request->validated());
 
         return $this
             ->transformItem('organisation', $organisation, ['user'])
