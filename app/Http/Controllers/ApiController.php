@@ -132,7 +132,7 @@ class ApiController extends Controller
     public function transformCollection(string $key, $data, $includes = null): self
     {
         $collection = fractal()
-            ->collection($data, $this->getTransformer())
+            ->collection($data, $this->getTransformer($key))
             ->serializeWith(self::getSerializer())
             ->parseIncludes(Arr::wrap($includes))
             ->toArray();
@@ -157,7 +157,7 @@ class ApiController extends Controller
     {
         $class = '\\App\\Transformers\\';
 
-        $class = $class . ucfirst($this->request->get('_controller')) . 'Transformer';
+        $class = $class . $this->getControllerName() . 'Transformer';
 
         $class = new $class();
 
@@ -182,6 +182,19 @@ class ApiController extends Controller
     public function getTransformer()
     {
         return $this->transformer ?? $this->getDefaultTransformer();
+    }
+
+    /**
+     * @return string
+     */
+    public function getControllerName(): String
+    {
+        $routeArray = $this->request->route()->getAction();
+        $controllerAction = class_basename($routeArray['controller']);
+        list($controller, $action) = explode('@', $controllerAction);
+        $name = str_replace('Controller', '', $controller);
+
+        return $name;
     }
 
     /**

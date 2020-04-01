@@ -24,7 +24,9 @@ class OrganisationController extends ApiController
     {
         $organisations = $service->listOrganisations($filter);
 
-        return fractal($organisations, new OrganisationTransformer());
+        return $this
+        ->transformCollection('organisations', $organisations)
+        ->respond();
     }
 
     /**
@@ -37,6 +39,8 @@ class OrganisationController extends ApiController
         /** @var Organisation $organisation */
         $organisation = $service->createOrganisation($request->validated());
 
-        return fractal($organisation, new OrganisationTransformer())->respond();
+        return $this
+        ->transformItem('organisation', $organisation, ['owner'])
+        ->respond();
     }
 }
