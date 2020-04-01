@@ -8,6 +8,7 @@ use App\Organisation;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OrganisationService
@@ -23,6 +24,13 @@ class OrganisationService
     public function createOrganisation(array $attributes): Organisation
     {
         $organisation = new Organisation();
+
+        $organisation->name = $attributes['name'];
+        $organisation->owner_user_id = Auth::id();
+        $organisation->trial_end = Carbon::now()->addDays(30)->timestamp;
+        $organisation->subscribed = $attributes['subscribed'];
+
+        $organisation->save();
 
         return $organisation;
     }

@@ -20,7 +20,14 @@ class OrganisationTransformer extends TransformerAbstract
      */
     public function transform(Organisation $organisation): array
     {
-        return [];
+        return [
+            'id' => $organisation->id,
+            'name' => $organisation->name,
+            'trail_end' => $organisation->trial_end ?? Carbon::parse($organisation->trial_end)->timestamp,
+            'subscribed' => $organisation->subscribed,
+            'created_at' => $organisation->created_at ?? Carbon::parse($organisation->created_at)->timestamp,
+            'updated_at' => $organisation->created_at ?? Carbon::parse($organisation->created_at)->timestamp
+        ];
     }
 
     /**
