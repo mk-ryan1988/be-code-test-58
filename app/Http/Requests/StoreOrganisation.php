@@ -10,12 +10,12 @@ class StoreOrganisation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
+     * Checking against passport auth
      * @return bool
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::guard('api')->user();
     }
 
     /**

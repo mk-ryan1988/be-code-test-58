@@ -21,7 +21,7 @@ class OrganisationTransformer extends TransformerAbstract
      *
      * @var array
      */
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'user'
     ];
     /**

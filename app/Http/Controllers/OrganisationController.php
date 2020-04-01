@@ -8,6 +8,7 @@ use App\Http\Requests\StoreOrganisation;
 use App\Organisation;
 use App\Services\OrganisationService;
 use App\Transformers\OrganisationTransformer;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OrganisationController
@@ -25,11 +26,12 @@ class OrganisationController extends ApiController
         $organisations = $service->listOrganisations($filter);
 
         return $this
-        ->transformCollection('organisations', $organisations)
+        ->transformCollection('organisations', $organisations, ['user'])
         ->respond();
     }
 
     /**
+     * @param StoreOrganisation $request
      * @param OrganisationService $service
      *
      * @return JsonResponse
@@ -40,7 +42,7 @@ class OrganisationController extends ApiController
         $organisation = $service->createOrganisation($request->validated());
 
         return $this
-        ->transformItem('organisation', $organisation, ['owner'])
+        ->transformItem('organisation', $organisation, ['user'])
         ->respond();
     }
 }

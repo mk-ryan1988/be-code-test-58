@@ -8,7 +8,6 @@ use League\Fractal\TransformerAbstract;
 class UserTransformer extends TransformerAbstract
 {
     /**
-     * A Fractal transformer.
      * @param User $user
      * @return array
      */
