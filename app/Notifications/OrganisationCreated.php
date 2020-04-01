@@ -44,8 +44,6 @@ class OrganisationCreated extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/invoice/' . $this->invoice->id);
-
         return (new MailMessage)
                     ->greeting('Hello, ' . Auth::user()->name . '!')
                     ->line($this->organisation->name . ', has been successfully registered!')
