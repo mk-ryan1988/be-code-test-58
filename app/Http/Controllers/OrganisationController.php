@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\StoreOrganisation;
 use App\Organisation;
 use App\Services\OrganisationService;
 use App\Transformers\OrganisationTransformer;
@@ -32,7 +32,7 @@ class OrganisationController extends ApiController
      *
      * @return JsonResponse
      */
-    public function store(StoreBlogPost $request, OrganisationService $service)
+    public function store(StoreOrganisation $request, OrganisationService $service)
     {
         /** @var Organisation $organisation */
         $organisation = $service->createOrganisation($request->validated());

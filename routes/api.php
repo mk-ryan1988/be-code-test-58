@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('organisation')->group(function () {
     Route::get('{filter?}', 'OrganisationController@index');
-    Route::post('', 'OrganisationControlller@store');
+    Route::post('', 'OrganisationController@store');
 });

@@ -46,7 +46,7 @@ class OrganisationCreated extends Notification
     {
         return (new MailMessage)
                     ->greeting('Hello, ' . Auth::user()->name . '!')
-                    ->line($this->organisation->name . ', has been successfully registered!')
+                    ->line($organisation->name . ', has been successfully registered!')
                     ->line('Trial Ends: ' . ($organisation->trial_end->format('d/M/Y') ?: 'N/A'))
                     ->line('Subscription' . ($organisation->subscribed ? 'subscribed' : 'unsubscribed'))
                     ->line('Thank you for using' . env('APP_NAME', ' our application') . '!');
